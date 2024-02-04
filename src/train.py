@@ -12,12 +12,12 @@ from model_easy import make_model_easy
 
 def train(train_dir='..\\data\\processed\\fl\\train',
           model_dir='..\\models\\base_tf',
-          epochs=10,
+          epochs=30,
           learning_rate=0.001,
           batch_size=128,
           image_size=192):
 
-    if not (os.path.exists('..\\variables')):
+    if not(os.path.exists('..\\variables')):
 
         x_train, x_val, y_train, y_val, marks = get_data_for_train(train_dir)
 
@@ -49,7 +49,7 @@ def train(train_dir='..\\data\\processed\\fl\\train',
         with open('..\\variables\\y_val.pkl', 'rb') as f:
             y_val = pickle.load(f)
 
-        with open('..\\variables\\marks.pkl', 'wb') as f:
+        with open('..\\variables\\marks.pkl', 'rb') as f:
             marks = pickle.load(f)
 
     model = compile_model(len(marks),
@@ -109,11 +109,11 @@ def get_data_for_train(train_dir):
         shuffle=True
     )
     print('plan A')
-    x_train = tensorflow.ragged.constant(x_train[:2000])
+    x_train = tensorflow.ragged.constant(x_train[:1000])
     print('plan B')
-    x_val = tensorflow.ragged.constant(x_val[:500])
-    y_train = tensorflow.ragged.constant(y_train[:2000])
-    y_val = tensorflow.ragged.constant(y_val[:500])
+    x_val = tensorflow.ragged.constant(x_val[:300])
+    y_train = tensorflow.ragged.constant(y_train[:1000])
+    y_val = tensorflow.ragged.constant(y_val[:300])
     print('YAhooooooo')
     return x_train, x_val, y_train, y_val, marks
 
